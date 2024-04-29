@@ -53,7 +53,7 @@ object NewsService {
    */
   def filterNews(newsDataset: Dataset[News]) : Dataset[News] = {
     newsDataset.filter { news =>
-      ??? //@TODO complete here
+      news.containsWordGlobalWarming  //@TODO complete here
     }
   }
 
@@ -65,8 +65,12 @@ object NewsService {
    * @param description "my awesome sentence contains a key word like climate change"
    * @return Boolean True
    */
+  def isClimateRelated(description: String): Boolean = {
+    val keywords = Seq("global warming", "IPCC", "climate change")
+    keywords.exists(keyword => description.toLowerCase.contains(keyword.toLowerCase))
+  }
   def getNumberOfNews(dataset: Dataset[News]): Long = {
     //@TODO look a the Spark API to know how to count
-    return 1 // code here
+    return dataset.count()// code here
   }
 }
